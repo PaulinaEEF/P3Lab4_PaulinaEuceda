@@ -12,6 +12,8 @@ using std::endl;
 using std::vector;
 using std::string;
 
+string encriptarYDes(int);
+
 int main(int argc, char** argv) {
 	vector<Persona> vectPersonas;
 	
@@ -95,7 +97,7 @@ int main(int argc, char** argv) {
 						
 						cout<<"1) Enviar mensaje" << endl 
 							<<"2) Ver mensajes "<<endl
-							<<"2) Ver mi llave "<<endl
+							<<"3) Ver mi llave "<<endl
 							<<"4) Salir "<<endl
 							<<"Opcion: ";
 						
@@ -104,7 +106,12 @@ int main(int argc, char** argv) {
 						switch(opcionDeMensajeria) {
 							case 1:{
 								//enviar mensaje
-								
+								cout<<endl << "--Enviar mensaje a: "<<endl;
+								for(int i=0; i<vectPersonas.size(); i++){
+									int ordenListado = i+1;
+									cout << ordenListado << ") " << vectPersonas[i].getNombre()<<endl;
+									
+								}
 								
 								
 								break;
@@ -146,7 +153,14 @@ int main(int argc, char** argv) {
 				break;
 		}
 	}
-	
-	
 	return 0;
 }
+string encriptarYDes(int llave){
+	
+}
+
+
+
+
+
+
