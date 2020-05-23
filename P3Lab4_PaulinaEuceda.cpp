@@ -12,13 +12,15 @@ using std::endl;
 using std::vector;
 using std::string;
 
-string encriptarYDes(int);
+void encriptarYDes(string, int, bool);
 
+string mensajeEN; //mensaje encriptado
 int main(int argc, char** argv) {
 	vector<Persona> vectPersonas;
 	
 	vectPersonas.push_back(Persona("Paulina", "Euceda", "123"));
-	vectPersonas[0].setMensaje("este mensaje es de prueba");
+	vectPersonas[0].setMensaje("holaquestapasandoaquicon");
+	vectPersonas.push_back(Persona("Juan", "Bados", "123"));
 //    vectPersonas.push_back(10); 
 //    cout<<vectPersonas[0];
 
@@ -93,7 +95,7 @@ int main(int argc, char** argv) {
 					cout<< "Se inició sesión con éxito"<<endl<<endl;
 					
 					
-					while(salidaDelMenu){
+					while(salidaDelLogin){
 						
 						cout<<"1) Enviar mensaje" << endl 
 							<<"2) Ver mensajes "<<endl
@@ -106,25 +108,58 @@ int main(int argc, char** argv) {
 						switch(opcionDeMensajeria) {
 							case 1:{
 								//enviar mensaje
-								cout<<endl << "--Enviar mensaje a: "<<endl;
+								cout<<endl << "--Listado de Personas-- "<<endl;
 								for(int i=0; i<vectPersonas.size(); i++){
 									int ordenListado = i+1;
 									cout << ordenListado << ") " << vectPersonas[i].getNombre()<<endl;
 									
 								}
+								int posReceptorMensaje;
+								cout << "Enviar mensaje a: ";
+								cin >> posReceptorMensaje;
+								posReceptorMensaje--;
+								cout<<endl;
+								
+								string mensajeSE;//mensaje sin encriptar
+								cout << "Escriba el mensaje que quiere enviar: ";
+								cin >> mensajeSE;
 								
 								
+								
+								vectPersonas[posReceptorMensaje].setMensaje(mensajeSE);
+								//vectPersonas[posReceptorMensaje].getMensajes().push_back(mensajeSE);//este no funciona
+								cout << vectPersonas[posReceptorMensaje].getMensajes().size();
+								
+								cout<<endl<<endl;
 								break;
 							}
 							case 2:{
 								cout << "---Lista de mensajes---"<<endl;
 								//ver mensajes
+								
+								int llave = vectPersonas[posicionDelUsuarioIngresado].getLlave();
 								for(int i=0; i<vectPersonas[posicionDelUsuarioIngresado].getMensajes().size(); i++){
+									
+									string cadena = vectPersonas[posicionDelUsuarioIngresado].getMensaje(i);
 									int ordenListado = i+1;
-									cout << ordenListado << ") De: " << vectPersonas[posicionDelUsuarioIngresado].getMensaje(i)<<endl;
+									
+									encriptarYDes(cadena, llave, true);
+									cout << ordenListado << ") " << mensajeEN <<endl;
+									mensajeEN = "";
 									
 								}
-								cout << endl;
+								int mensajeSeleccionado;
+								cout << "Seleccione el mensaje: ";
+								cin >> mensajeSeleccionado;
+								mensajeSeleccionado--;
+								cout<<endl;
+								
+								llave = vectPersonas[posicionDelUsuarioIngresado].getLlave();//se me fue el tempo :p
+								string cadena = vectPersonas[posicionDelUsuarioIngresado].getMensaje(mensajeSeleccionado);
+								encriptarYDes(cadena, llave, false);
+								cout << "[Mensaje] " << mensajeEN;
+								mensajeEN = "";
+								cout << endl<<endl;
 								break;
 							}
 							case 3:{
@@ -134,7 +169,7 @@ int main(int argc, char** argv) {
 								break;
 							}
 							default:
-								salidaDelMenu = false;
+								salidaDelLogin = false;
 								cout<< "Cerrado de Sesion correcto. Adios"<<endl<<endl;
 								break;
 						}
@@ -155,9 +190,55 @@ int main(int argc, char** argv) {
 	}
 	return 0;
 }
-string encriptarYDes(int llave){
-	
+
+
+void encriptarYDes(string cadena, int llave, bool direccion){
+	bool direccionGen = direccion;
+	if(llave > 0){
+		for (int a = 0; a < cadena.size(); a+=llave){
+			for (int b = a; b < llave; b++){
+			
+				if(direccion == true){
+					char caracter_pos = cadena[b];
+					
+					int valor_ascci = caracter_pos;
+					valor_ascci+=llave;
+					char caracter = (char) valor_ascci;
+					mensajeEN+=caracter;
+					
+				}else{
+					
+					char caracter_pos = cadena[b];
+					
+					int valor_ascci = caracter_pos;
+					valor_ascci-=llave;
+					char caracter = (char) valor_ascci;
+					
+					mensajeEN+=caracter+"";
+					
+				}
+			}
+			if(direccion == true){
+				direccion = false;
+			}else{
+				direccion = true;
+			}
+		
+		}
+		llave--;
+		encriptarYDes(cadena, llave, direccionGen);
+	}
+
 }
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 
 

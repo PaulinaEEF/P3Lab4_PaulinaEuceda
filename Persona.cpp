@@ -6,11 +6,11 @@
 #include <cstdlib>
 #include <ctime>
 
-string nombre;
-string apellido;
-string contrasena;
-int llave;
-vector<string> vectMensajes;
+//string nombre;
+//string apellido;
+//string contrasena;
+//int llave;
+//vector<string> vectMensajes;
 
 using std::cout;
 using std::endl;
@@ -59,16 +59,15 @@ int Persona::getLlave(){
 
 
 string Persona::getMensaje(int posicionMensaje){
-	return vectMensajes[posicionMensaje];
+	return mensajes[posicionMensaje];
 }
 
 void Persona::setMensaje(string mensaje){
-	vectMensajes.push_back(mensaje); 
+	mensajes.push_back(mensaje); 
 }
 
-vector <string>& Persona::getMensajes(){
-	
-	return vectMensajes;
+vector <string> Persona::getMensajes(){
+	return mensajes;
 }
 
 

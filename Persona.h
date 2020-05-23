@@ -21,7 +21,7 @@ class Persona
 		int getLlave(); 
 		string getMensaje(int);
 		void setMensaje(string);
-		vector <string>& getMensajes();
+		vector <string> getMensajes();
 		
 		
 		~Persona();
